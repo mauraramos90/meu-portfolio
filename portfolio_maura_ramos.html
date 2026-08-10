@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maura Ramos | GPM & Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --canvas: #FBF9F5;
+            --charcoal: #1E1E1E;
+            --purple: #6C5CE7;
+            --amber: #FDCB6E;
+            --mint: #55E6C1;
+            --burgundy: #E2725B;
+        }
+
+        body {
+            background-color: var(--canvas);
+            color: var(--charcoal);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .neo-brutalism-card {
+            background: white;
+            border: 3px solid var(--charcoal);
+            box-shadow: 6px 6px 0px var(--charcoal);
+            transition: all 0.2s ease;
+        }
+
+        .neo-brutalism-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0px var(--charcoal);
+        }
+
+        .neo-brutalism-button {
+            border: 2px solid var(--charcoal);
+            box-shadow: 4px 4px 0px var(--charcoal);
+            transition: all 0.1s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .neo-brutalism-button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px var(--charcoal);
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+        }
+
+        .timeline-line {
+            width: 3px;
+            background-color: var(--charcoal);
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+        }
+
+        .photo-frame {
+            border: 3px solid var(--charcoal);
+            box-shadow: 10px 10px 0px var(--burgundy);
+        }
+
+        .badge-retro {
+            display: inline-block;
+            padding: 4px 12px;
+            border: 2px solid var(--charcoal);
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+        }
+
+        .mentor-sticker {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 2.5px solid var(--charcoal);
+            padding: 2px 10px;
+            border-radius: 2px;
+            font-size: 0.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-shadow: 3px 3px 0px var(--charcoal);
+            transition: all 0.1s;
+            cursor: pointer;
+            transform: rotate(-2deg);
+            white-space: nowrap;
+        }
+
+        .mentor-sticker:hover {
+            transform: scale(1.1) rotate(0deg);
+            box-shadow: 4px 4px 0px var(--charcoal);
+            z-index: 10;
+        }
+
+        .nested-card {
+            border-left: 4px solid var(--charcoal);
+            margin-left: 8px;
+            padding-left: 20px;
+            padding-bottom: 24px;
+            position: relative;
+        }
+
+        .nested-card::before {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 0;
+            width: 4px;
+            height: 20px;
+            background: var(--charcoal);
+        }
+
+        @media (max-width: 768px) {
+            .chart-container { height: 250px; }
+            .timeline-line { left: 15px; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Fixo -->
+    <header class="sticky top-0 z-50 bg-[#FBF9F5] border-b-2 border-[#1E1E1E] px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="font-display font-bold text-xl tracking-tighter">MAURA RAMOS</span>
+                <span class="hidden md:block badge-retro bg-[#55E6C1]">Feito com amor & IA</span>
+            </div>
+            <nav class="hidden md:flex gap-8 font-semibold text-sm">
+                <a href="#trajetoria" class="hover:underline">Trajetória</a>
+                <a href="#maker-lab" class="hover:underline">Meus Projetos</a>
+                <a href="https://www.linkedin.com/in/mauraramos/" target="_blank" class="neo-brutalism-button bg-[#6C5CE7] text-white px-4 py-1">LinkedIn</a>
+            </nav>
+            <button class="md:hidden text-2xl">☰</button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6">
+        
+        <!-- Hero Section -->
+        <section class="py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="badge-retro bg-[#FDCB6E] mb-6">Group Product Manager</div>
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
+                    Criando <span class="text-[#6C5CE7]">produtos</span> e <span class="text-[#6C5CE7]">times</span> que as pessoas amam.
+                </h1>
+                <p class="text-lg md:text-xl text-gray-700 mb-8 max-w-xl">
+                    Especialista em pagamentos online e adquirência.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#maker-lab" class="neo-brutalism-button bg-[#6C5CE7] text-white px-8 py-3 font-bold text-lg">Meus Projetos</a>
+                    <a href="https://www.linkedin.com/in/mauraramos/" class="neo-brutalism-button bg-white px-8 py-3 font-bold text-lg">LinkedIn</a>
+                </div>
+            </div>
+            <div class="relative justify-self-center md:justify-self-end">
+                <div class="photo-frame overflow-hidden w-64 h-64 md:w-80 md:h-80 bg-gray-200">
+                    <img src="C:\Users\maura\Downloads\meu-portifolio\foto_perfil.png" alt="Maura Ramos Professional" class="w-full h-full object-cover">
+                </div>
+                <!-- Floating Tags -->
+                <div class="absolute -top-4 -right-4 neo-brutalism-card bg-[#55E6C1] p-3 text-xs font-bold">
+                    +20% TPV Incremental
+                </div>
+                <div class="absolute -bottom-4 -left-4 neo-brutalism-card bg-[#FDCB6E] p-3 text-xs font-bold">
+                    10+ Squads Lideradas
+                </div>
+            </div>
+        </section>
+
+        <!-- Introdução às Métricas -->
+        <section class="py-10 border-t-2 border-[#FBF9F5]">
+            <div class="max-w-3xl">
+            </div>
+        </section>
+
+
+        <!-- AI Maker Lab Section (Sam Dickie Inspiration) -->
+        <section id="maker-lab" class="py-20 bg-[#1E1E1E] -mx-6 px-6 text-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-12">
+                    <div class="badge-retro bg-[#6C5CE7] text-white border-white mb-4">Experimentos</div>
+                    <h2 class="text-4xl font-bold">Meus projetos 🤖</h2>
+                    <p class="text-gray-400 mt-4 max-w-2xl">
+                        A nova era do Gestor de Produtos é ser um criador autônomo. Aqui estão projetos que desenvolvi usando Gemini, Cursor, Lovable, LLMs e etc para validar hipóteses rapidamente.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Project 1 -->
+                    <div class="neo-brutalism-card bg-[#2D2D2D] border-white p-6 hover:bg-[#3D3D3D]">
+                        <div class="w-12 h-12 bg-[#6C5CE7] rounded-full flex items-center justify-center mb-6 border-2 border-white">✨</div>
+                        <h3 class="text-xl font-bold mb-3">Portfólio com Gemini + Cursor</h3>
+                        <p class="text-gray-400 text-sm mb-4">Criei esse portifólio aqui em apenas 24horas.</p>
+                        <span class="text-[10px] font-bold bg-white text-black px-2 py-1 rounded">Google Gemini + Cursor</span>
+                    </div>
+                    <!-- Project 2 -->
+                    <div class="neo-brutalism-card bg-[#2D2D2D] border-white p-6 hover:bg-[#3D3D3D]">
+                        <div class="w-12 h-12 bg-[#55E6C1] rounded-full flex items-center justify-center mb-6 border-2 border-white">💬</div>
+                        <h3 class="text-xl font-bold mb-3">Em construção...</h3>
+                        <p class="text-gray-400 text-sm mb-4">...</p>
+                        <span class="text-[10px] font-bold bg-white text-black px-2 py-1 rounded">? + ?</span>
+                    </div>
+                    <!-- Project 3 -->
+                    <div class="neo-brutalism-card bg-[#2D2D2D] border-white p-6 hover:bg-[#3D3D3D]">
+                        <div class="w-12 h-12 bg-[#FDCB6E] rounded-full flex items-center justify-center mb-6 border-2 border-white">💸</div>
+                        <h3 class="text-xl font-bold mb-3">Em construção...</h3>
+                        <p class="text-gray-400 text-sm mb-4">...</p>
+                        <span class="text-[10px] font-bold bg-white text-black px-2 py-1 rounded">? + ?</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trajetória Profissional (Timeline) -->
+        <section id="trajetoria" class="py-20">
+            <div class="max-w-3xl mb-16">
+                <h2 class="text-4xl font-bold mb-4">Trajetória Profissional</h2>
+                <p class="text-gray-700 space-y-3 font-medium">Trabalho duro, consistência e aprendizado com pessoas que me inspiraram em cada etapa.</p>
+            </div>
+
+            <div class="relative space-y-16">
+                <div class="timeline-line"></div>
+                
+                <div class="relative pl-12">
+                    <div class="absolute left-[-6px] top-1 w-8 h-8 bg-[#6C5CE7] border-2 border-[#1E1E1E] rounded-full flex items-center justify-center text-white text-[10px] font-bold">HOJE</div>
+                    <div class="neo-brutalism-card p-6">
+                        <div class="flex justify-between flex-wrap gap-2 mb-4">
+                            <h3 class="text-xl font-bold">Banco Inter | Group Product Manager Inter Pag</h3>
+                            <span class="text-xs font-bold text-gray-400">Mar 2026 - Atual</span>
+                        </div>
+                        <ul class="text-gray-700 space-y-3 text-sm font-medium">
+                            <li class="flex items-start gap-2">
+                                <span class="text-[#6C5CE7]">→</span> Responsável pelo direcionamento estratégico de toda a Inter Pag (Adquirência do Banco Inter), com foco em soluções de pagamento para PME's.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="relative pl-12">
+                    <div class="absolute left-[-6px] top-1 w-8 h-8 bg-[#FDCB6E] border-2 border-[#1E1E1E] rounded-full"></div>
+                    <div class="neo-brutalism-card p-6">
+                        <div class="flex justify-between items-center mb-8 pb-4">
+                            <h3 class="text-2xl font-bold">PagBank | Pagamentos online</h3>
+                            <span class="text-xs font-bold text-gray-400">Ago 2022 - Fev 2026</span>
+                        </div>
+                        
+                        <div class="nested-card">
+                            <div class="flex justify-between items-start mb-2">
+                                <p class="font-bold text-[#6C5CE7]">Coordenadora de Produtos</p>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[9px] font-black text-gray-400">LIDERADA POR:</span>
+                                    <a href="https://www.linkedin.com/in/leticia-latsch-718b80a9/" target="_blank" class="mentor-sticker bg-[#FDCB6E]">Le</a>
+                                </div>
+                            </div>
+                            <ul class="text-gray-700 space-y-3 text-sm font-medium">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-[#6C5CE7]">→</span> Direcionamento estratégico, reposicionamento e GTM de produtos de pagamentos digitais com foco em PMEs:
+                                    Link de Pagamento, Gestão de Cobranças, Pagamento Recorrente, Pix Automático, e Plataformas (VTEX, MAGENTO, SHOPIFY, etc).
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-[#6C5CE7]">→</span>  Liderança de 4 Product Owners de10 squads multidisciplinares, alinhando o backlog e os KPIs para maximizar o impacto no negócio e a experiência do cliente.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="nested-card">
+                            <div class="flex justify-between items-start mb-2">
+                                <p class="font-bold text-gray-800">Especialista de Produtos</p>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[9px] font-black text-gray-400">LIDERADA POR:</span>
+                                    <a href="https://www.linkedin.com/in/leandro-bueno-%F0%9F%8F%B3%EF%B8%8F%E2%80%8D%F0%9F%8C%88-51697a62/" target="_blank" class="mentor-sticker bg-[#55E6C1]">Le</a>
+                                </div>
+                            </div>
+                            <ul class="text-gray-700 space-y-3 text-sm font-medium">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-[#6C5CE7]">→</span>  Visão estratégica de produtos para os segmentos de Parcerias, Empresas e Franquias, desenvolvendo uma experiência omnichannel para o Split de Pagamentos.
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-[#6C5CE7]">→</span>  Liderança e lançamento de uma nova interface que reduziu o atrito e acelerou o processo de plug and play para novos parceiros.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="nested-card">
+                            <div class="flex justify-between items-start mb-2">
+                                <p class="font-bold text-gray-800">Product Owner Pl / Sr</p>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[9px] font-black text-gray-400">LIDERADA POR:</span>
+                                    <a href="https://www.linkedin.com/in/edulolli/" target="_blank" class="mentor-sticker bg-[#6C5CE7] text-white">Edu</a>
+                                </div>
+                            </div>
+                            <ul class="text-gray-700 space-y-3 text-sm font-medium">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-[#6C5CE7]">→</span>Incremento de TPV (Volume Total de Pagamentos) de 20% no primeiro mês de lançamento da funcionalidade de Split com Pix via API.
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-[#6C5CE7]">→</span>Expansão do produto de Pré-autorização e Captura com Split, abrindo novos mercados e modelos de negócio que exigem mais flexibilidade.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative pl-12">
+                    <div class="absolute left-[-6px] top-1 w-8 h-8 bg-[#55E6C1] border-2 border-[#1E1E1E] rounded-full"></div>
+                    <div class="neo-brutalism-card p-6">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-xl font-bold">Sinch | Product Owner</h3>
+                                <p class="text-xs font-bold text-gray-400">IA Conversacional & NLP</p>
+                            </div>
+                            <div class="flex flex-col items-end gap-3">
+                                <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Liderada por:</span>
+                                <div class="flex gap-3">
+                                    <a href="https://www.linkedin.com/in/filipineves/" target="_blank" class="mentor-sticker bg-[#FDCB6E] rotate-1">Neves</a>
+                                    <a href="https://www.linkedin.com/in/pamella-novais-761180107/" target="_blank" class="mentor-sticker bg-[#6C5CE7] text-white -rotate-2">Pam</a>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="text-gray-700 space-y-3 text-sm font-medium">
+                            <li class="flex items-start gap-2">
+                                <span class="text-[#6C5CE7]">→</span>Condução de discoveries e design de jornadas de chatbots inteligentes com NLP e Gen AI.
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-[#6C5CE7]">→</span>MVP de vendas de marmitas via WhatsApp, validando hipóteses de mercado e alcançando público que não utiliza aplicativos mobile.
+                            </li>
+                            <a href="https://wa.me/5511910342963/" target="_blank" class="mentor-sticker bg-[#E2725B] text-black rotate-1">CASE: Recicla BOT iFood</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="relative pl-12">
+                    <div class="absolute left-[-6px] top-1 w-8 h-8 bg-gray-300 border-2 border-[#1E1E1E] rounded-full"></div>
+                    <div class="neo-brutalism-card p-6">
+                        <h3 class="text-xl font-bold mb-2">Data Machina | Analista de Startup</h3>
+                        <ul class="text-gray-700 space-y-3 text-sm font-medium">
+                            <li class="flex items-start gap-2">
+                                <span class="text-[#6C5CE7]">→</span>Liderança em projetos de programas para startups (InovAtiva Brasil, IA² MCTI, e ADE SAMPA) com foco em inovações com impacto direto em comunidades locais.
+                            </li>
+                        </ul>                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cultura e Liderança (Gallery) -->
+
+        <!-- Competências e Formação -->
+        <section class="py-20 grid md:grid-cols-2 gap-12">
+            <div class="neo-brutalism-card p-8 bg-white">
+                <h3 class="text-2xl font-bold mb-6 underline">Habilidades Técnicas</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="badge-retro bg-[#FDCB6E]">Discovery & Delivery</span>
+                    <span class="badge-retro bg-[#55E6C1]">APIs de Pagamento</span>
+                    <span class="badge-retro bg-[#6C5CE7] text-white">Pix & Split</span>
+                    <span class="badge-retro bg-gray-100">SQL & Looker</span>
+                    <span class="badge-retro bg-gray-100">Tap on Phone</span>
+                    <span class="badge-retro bg-gray-100">Go-To-Market</span>
+                    <span class="badge-retro bg-gray-100">AI Prompting</span>
+                </div>
+            </div>
+            <div class="neo-brutalism-card p-8 bg-white">
+                <h3 class="text-2xl font-bold mb-6 underline">Formação</h3>
+                <ul class="space-y-4">
+                    <li>
+                        <p class="font-bold">MBA Digital Business</p>
+                        <p class="text-sm text-gray-500">USP ESALQ (2022 - 2024)</p>
+                    </li>
+                    <li>
+                        <p class="font-bold">AI Product Leaders</p>
+                        <p class="text-sm text-gray-500">Tera (2025)</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#1E1E1E] text-white py-16 px-6 mt-20 border-t-4 border-[#6C5CE7]">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-8">Vamos construir o futuro dos pagamentos juntos?</h2>
+            <div class="flex justify-center gap-6 mb-12">
+                <a href="https://www.linkedin.com/in/mauraramos/" target="_blank" class="neo-brutalism-button bg-[#6C5CE7] px-8 py-3 font-bold hover:scale-105 transition-transform">LinkedIn</a>
+                <a href="mailto:mauraramos.usp@gmail.com" class="neo-brutalism-button bg-white text-black px-8 py-3 font-bold hover:scale-105 transition-transform">E-mail</a>
+            </div>
+            <p class="text-gray-500 text-sm">© 2026 Maura Ramos • Feito com IA & Amor</p>
+            <p class="text-[10px] text-gray-600 mt-2 uppercase tracking-widest">São Paulo, Brasil</p>
+        </div>
+    </footer>
+
+    <script>
+        // Chart Integration
+        const ctx = document.getElementById('impactChart').getContext('2d');
+        const impactChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Lançamento', 'Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+                datasets: [{
+                    label: 'Crescimento TPV (%)',
+                    data: [0, 5, 12, 18, 20],
+                    borderColor: '#6C5CE7',
+                    backgroundColor: 'rgba(108, 92, 231, 0.1)',
+                    borderWidth: 4,
+                    pointRadius: 6,
+                    pointBackgroundColor: '#FDCB6E',
+                    pointBorderColor: '#1E1E1E',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#1E1E1E',
+                        titleFont: { family: 'Space Grotesk' },
+                        bodyFont: { family: 'Plus Jakarta Sans' },
+                        padding: 12,
+                        cornerRadius: 4
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#E2E8F0' },
+                        ticks: {
+                            font: { weight: 'bold' },
+                            callback: function(value) { return value + '%'; }
+                        }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { weight: 'bold' } }
+                    }
+                }
+            }
+        });
+
+        // Mobile Menu Toggle (Simplified)
+        document.querySelector('button.md\\:hidden').addEventListener('click', () => {
+            alert('Navegação: Trajetória, AI Maker Lab, Cultura, Contato.');
+        });
+    </script>
+</body>
+</html>
